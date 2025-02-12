@@ -84,22 +84,22 @@ class MovieRepositoryImpl implements MovieRepository {
     final genreNames = <String>[];
     final missingIds = <int>{};
 
-    for (var id in genreIds) {
+    genreIds.forEach((id) {
       if (genresMap.containsKey(id)) {
-        genreNames.add(genresMap[id]!.name);
+        genreNames.add(genresMap[id]?.name ?? 'Unknown');
       } else {
         missingIds.add(id);
       }
-    }
+    });
 
     if (missingIds.isNotEmpty) {
       final updatedGenres = await _updateLocalGenres();
       genresMap.addAll({for (var genre in updatedGenres) genre.id: genre});
     }
 
-    for (var id in missingIds) {
-      genreNames.add(genresMap[id]!.name);
-    }
+    missingIds.forEach((id) {
+      genreNames.add(genresMap[id]?.name ?? 'Unknown');
+    });
 
     return genreNames;
   }

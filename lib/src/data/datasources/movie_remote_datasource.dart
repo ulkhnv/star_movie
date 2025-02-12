@@ -20,12 +20,12 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
 
   @override
   Future<List<MovieCoverModel>> getNowShowingMovies() async {
-    return _getMovies('now_playing');
+    return _getMovies(nowPlaying);
   }
 
   @override
   Future<List<MovieCoverModel>> getUpcomingMovies() {
-    return _getMovies('upcoming');
+    return _getMovies(upcoming);
   }
 
   Future<List<MovieCoverModel>> _getMovies(String path) async {

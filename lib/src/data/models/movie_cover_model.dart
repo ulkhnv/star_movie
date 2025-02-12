@@ -1,4 +1,6 @@
-class MovieCoverModel {
+import 'package:star_movie/src/data/models/base_model.dart';
+
+class MovieCoverModel extends BaseModel {
   const MovieCoverModel({
     required this.id,
     required this.title,
@@ -13,6 +15,7 @@ class MovieCoverModel {
   final List<int> genreIds;
   final String posterPath;
 
+  @override
   factory MovieCoverModel.fromJson(Map<String, dynamic> json) {
     return MovieCoverModel(
       id: json['id'] as int,
@@ -23,6 +26,7 @@ class MovieCoverModel {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
