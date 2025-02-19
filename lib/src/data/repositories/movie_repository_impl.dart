@@ -24,20 +24,22 @@ class MovieRepositoryImpl implements MovieRepository {
   final MovieMapper movieMapper;
 
   @override
-  Future<List<MovieCover>> getNowShowingMovies() async {
+  Future<List<MovieCover>> getNowShowingMovies(bool forceUpdate) async {
     return _getMovies(
       getLocalMovies: movieLocalDataSource.getNowShowingMovies,
       getRemoteMovies: movieRemoteDataSource.getNowShowingMovies,
       setMovies: movieLocalDataSource.setNowShowingMovies,
+      forceUpdate: forceUpdate,
     );
   }
 
   @override
-  Future<List<MovieCover>> getUpcomingMovies() async {
+  Future<List<MovieCover>> getUpcomingMovies(bool forceUpdate) async {
     return _getMovies(
       getLocalMovies: movieLocalDataSource.getUpcomingMovies,
       getRemoteMovies: movieRemoteDataSource.getUpcomingMovies,
       setMovies: movieLocalDataSource.setUpcomingMovies,
+      forceUpdate: forceUpdate,
     );
   }
 
@@ -45,6 +47,7 @@ class MovieRepositoryImpl implements MovieRepository {
     required Future<List<MovieCoverModel>> Function() getLocalMovies,
     required Future<List<MovieCoverModel>> Function() getRemoteMovies,
     required Future<void> Function(List<MovieCoverModel>) setMovies,
+    required bool forceUpdate,
   }) async {
     final now = DateTime.now();
     final cachedMovies = await getLocalMovies();
@@ -52,10 +55,9 @@ class MovieRepositoryImpl implements MovieRepository {
     final shouldUpdate =
         lastUpdate == null || now.difference(lastUpdate).inDays >= 1;
 
-    if (cachedMovies.isNotEmpty && !shouldUpdate) {
+    if (cachedMovies.isNotEmpty && !shouldUpdate && !forceUpdate) {
       return _mapToMovieCover(cachedMovies);
     }
-
     final remoteMovies = await getRemoteMovies();
     await setMovies(remoteMovies);
     await movieLocalDataSource.setLastUpdate(now);
