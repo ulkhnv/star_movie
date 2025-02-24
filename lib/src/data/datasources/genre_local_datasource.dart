@@ -10,17 +10,18 @@ abstract class GenreLocalDataSource {
   Future<void> setGenres(List<GenreModel> genreModels);
 }
 
-class GenreLocalDataSourceImpl extends GenreLocalDataSource {
+class GenreLocalDataSourceImpl implements GenreLocalDataSource {
   GenreLocalDataSourceImpl({required this.sharedPreferences});
 
   final SharedPreferences sharedPreferences;
 
   @override
   Future<List<GenreModel>> getGenres() async {
-    final jsonGenreModels = sharedPreferences.getStringList(genres);
+    final jsonGenreModels = sharedPreferences.getStringList(GENRES_KEY);
     if (jsonGenreModels == null || jsonGenreModels.isEmpty) {
       return [];
     }
+
     return jsonGenreModels
         .map((e) => GenreModel.fromJson(json.decode(e)))
         .toList();
@@ -30,6 +31,6 @@ class GenreLocalDataSourceImpl extends GenreLocalDataSource {
   Future<void> setGenres(List<GenreModel> genreModels) async {
     final jsonGenreModels =
         genreModels.map((e) => json.encode(e.toJson())).toList();
-    await sharedPreferences.setStringList(genres, jsonGenreModels);
+    await sharedPreferences.setStringList(GENRES_KEY, jsonGenreModels);
   }
 }

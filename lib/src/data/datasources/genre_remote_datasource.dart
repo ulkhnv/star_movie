@@ -7,7 +7,7 @@ abstract class GenreRemoteDataSource {
   Future<List<GenreModel>> getGenres();
 }
 
-class GenreRemoteDataSourceImpl extends GenreRemoteDataSource {
+class GenreRemoteDataSourceImpl implements GenreRemoteDataSource {
   GenreRemoteDataSourceImpl({
     required this.dio,
   }) {
@@ -19,7 +19,7 @@ class GenreRemoteDataSourceImpl extends GenreRemoteDataSource {
   @override
   Future<List<GenreModel>> getGenres() async {
     try {
-      final response = await dio.get(baseGenreUrl);
+      final response = await dio.get(BASE_GENRE_URL);
       if (response.statusCode == 200) {
         return (response.data['genres'] as List)
             .map((e) => GenreModel.fromJson(e))

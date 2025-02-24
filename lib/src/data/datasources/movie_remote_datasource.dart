@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:star_movie/src/data/constants/constants.dart';
 import 'package:star_movie/src/data/interceptors/api_key_interceptor.dart';
 import 'package:star_movie/src/data/models/movie_cover_model.dart';
+import 'package:star_movie/src/domain/entities/enums/movie_cover_category.dart';
 
 abstract class MovieRemoteDataSource {
-  Future<List<MovieCoverModel>> getNowShowingMovies();
-
-  Future<List<MovieCoverModel>> getUpcomingMovies();
+  Future<List<MovieCoverModel>> getMovieCovers(
+      MovieCoverCategory category, int page);
 }
 
-class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
+class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
   MovieRemoteDataSourceImpl({
     required this.dio,
   }) {
@@ -19,18 +19,19 @@ class MovieRemoteDataSourceImpl extends MovieRemoteDataSource {
   final Dio dio;
 
   @override
-  Future<List<MovieCoverModel>> getNowShowingMovies() async {
-    return _getMovies(nowPlaying);
+  Future<List<MovieCoverModel>> getMovieCovers(
+      MovieCoverCategory category, int page) {
+    switch (category) {
+      case MovieCoverCategory.nowShowing:
+        return _getMovies(NOW_SHOWING_API_PATH, page);
+      case MovieCoverCategory.upcoming:
+        return _getMovies(UPCOMING_API_PATH, page);
+    }
   }
 
-  @override
-  Future<List<MovieCoverModel>> getUpcomingMovies() {
-    return _getMovies(upcoming);
-  }
-
-  Future<List<MovieCoverModel>> _getMovies(String path) async {
+  Future<List<MovieCoverModel>> _getMovies(String path, int page) async {
     try {
-      final response = await dio.get('$baseMovieUrl/$path');
+      final response = await dio.get('$BASE_MOVIE_URL/$path?page=$page');
       if (response.statusCode == 200) {
         return (response.data['results'] as List)
             .map((e) => MovieCoverModel.fromJson(e))
