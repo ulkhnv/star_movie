@@ -1,0 +1,1 @@
+enum MovieCoverCategory { nowShowing, upcoming }
