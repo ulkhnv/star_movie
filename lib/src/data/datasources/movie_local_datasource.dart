@@ -66,6 +66,6 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   @override
   Future<void> setLastUpdate(DateTime dateTime) async {
     await sharedPreferences.setString(
-        LAST_UPDATE_KEY, dateTime.toIso8601String());
+        LAST_UPDATE_KEY, dateTime.toString());
   }
 }

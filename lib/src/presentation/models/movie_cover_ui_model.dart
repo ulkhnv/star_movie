@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:star_movie/src/presentation/constants/constants.dart';
 
 class MovieCoverUIModel extends Equatable {
   const MovieCoverUIModel({
@@ -26,5 +27,5 @@ class MovieCoverUIModel extends Equatable {
 
   double get voteAverageRounded => voteAverage.round() / 2;
 
-  String get fullPosterPath => "https://image.tmdb.org/t/p/original$posterPath";
+  String get fullPosterPath => "$imagePath/$posterPath";
 }
