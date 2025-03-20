@@ -1,4 +1,5 @@
 import 'package:contentsize_tabbarview/contentsize_tabbarview.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:star_movie/src/presentation/bloc/bloc_screen.dart';
 import 'package:star_movie/src/presentation/constants/constants.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends BlocScreenState<HomeScreen, HomeBloc>
   void initState() {
     super.initState();
     _tabController = TabController(length: _tabLength, vsync: this)
-      ..addListener(_stopSearch);
+      ..addListener(_stopSearch)..addListener(_logEvent);
     _searchController = TextEditingController()..addListener(_searchMovies);
     _scrollController = ScrollController()..addListener(_getNextMovies);
   }
@@ -63,6 +64,10 @@ class _HomeScreenState extends BlocScreenState<HomeScreen, HomeBloc>
 
   void _searchMovies() {
     bloc.searchMovies(_tabController.index, _searchController.text);
+  }
+  
+  void _logEvent() {
+    FirebaseAnalytics.instance.logEvent(name: "tab_changed");
   }
 
   @override

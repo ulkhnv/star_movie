@@ -93,6 +93,9 @@ class HomeBloc extends BlocImpl<HomeTile> {
 
   List<MovieCoverUIModel> _filterMovies(
       List<MovieCoverUIModel> movies, String query) {
+    if (query == 'crash') {
+      throw Exception();
+    }
     return query.isEmpty
         ? movies
         : movies
