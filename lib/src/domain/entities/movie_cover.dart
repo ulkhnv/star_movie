@@ -13,7 +13,7 @@ class MovieCover extends Equatable {
   final String title;
   final double voteAverage;
   final List<String> genreNames;
-  final String posterPath;
+  final String? posterPath;
 
   @override
   List<Object?> get props => [
