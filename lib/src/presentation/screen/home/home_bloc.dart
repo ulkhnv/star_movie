@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:star_movie/src/domain/entities/enums/movie_cover_category.dart';
 import 'package:star_movie/src/domain/usecases/get_movie_covers_use_case.dart';
 import 'package:star_movie/src/domain/usecases/movie_cover_params.dart';
@@ -93,9 +94,6 @@ class HomeBloc extends BlocImpl<HomeTile> {
 
   List<MovieCoverUIModel> _filterMovies(
       List<MovieCoverUIModel> movies, String query) {
-    if (query == 'crash') {
-      throw Exception();
-    }
     return query.isEmpty
         ? movies
         : movies
@@ -127,5 +125,9 @@ class HomeBloc extends BlocImpl<HomeTile> {
 
   void _updateData() {
     handleData(data: homeTile);
+  }
+
+  void logEvent() {
+    FirebaseAnalytics.instance.logEvent(name: "tab_changed");
   }
 }
