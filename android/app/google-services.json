@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "289350144349",
+    "project_id": "star-movie-b1523",
+    "storage_bucket": "star-movie-b1523.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289350144349:android:2d8dcb1a73d4c67fad18b4",
+        "android_client_info": {
+          "package_name": "kz.ulkhnv.star_movie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQPB9hxEN5nkFLiKMKiLYjMkExxEGUF4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

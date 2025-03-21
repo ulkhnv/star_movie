@@ -13,7 +13,7 @@ class MovieCoverModel extends BaseModel {
   final String title;
   final double voteAverage;
   final List<int> genreIds;
-  final String posterPath;
+  final String? posterPath;
 
   @override
   factory MovieCoverModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +22,7 @@ class MovieCoverModel extends BaseModel {
       title: json['title'] as String,
       voteAverage: (json['vote_average'] as num).toDouble(),
       genreIds: List<int>.from(json['genre_ids']),
-      posterPath: json['poster_path'] as String,
+      posterPath: json['poster_path'] as String?,
     );
   }
 
